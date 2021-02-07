@@ -1,0 +1,10 @@
+.selection{
+    cursor: pointer;
+}
+/* .selection.resizing{
+    display: inline-block;
+} */
+#marker1, #marker2{
+    border: 2px solid #aaaaaa;
+    content: '';
+}
