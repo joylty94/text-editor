@@ -144,6 +144,7 @@ const TextEditor = () => {
         let selection = document.getSelection();
         const range = selection.getRangeAt(0);
         console.log('selection', selection);
+        console.log('e', e);
         // Todo - span에 마지막 텍스트일 경우 뽑기
 
         // blur test
@@ -383,6 +384,33 @@ const TextEditor = () => {
         };
     };
 
+    const onInput = (e) => {
+        const selection = document.getSelection();
+        console.log('e>>>>', e);
+        console.log('data', e.nativeEvent.data);
+        console.log('innerText', e.target.innerText);
+        let cc = document.createElement('span');
+        cc.id = 'caretID';
+        setText([{ type: Fragment, value: e.target.innerText }]);
+        document.getSelection().getRangeAt(0).insertNode(cc);
+        editer.current.blur();
+        console.log('ㅊㅊㅊㅊ', document.getSelection().getRangeAt(0));
+
+        editer.current.focus();
+        var range = document.createRange();
+        let vv = document.getElementById('caretID');
+        range.selectNode(vv);
+
+        let vvSelection = document.getSelection();
+        vvSelection.removeAllRanges();
+        vvSelection.addRange(range);
+        range.deleteContents();
+
+        // editer.current.setSelectionRange(2, 5);
+    };
+    console.log('text11111', text);
+    //  const [text, setText] = useState([{ type: Fragment, value: 'value' }]);
+
     return (
         <EditerWrap>
             {/* <button onClick={(e) => setActive(true)}>dmdmdmd?</button> */}
@@ -394,11 +422,11 @@ const TextEditor = () => {
                 // onSelect={(e) => console.log(e.selectionStart)}
                 // onMouseDown={(e) => setSelect(false)}
                 // onBlur={(e) => setSelect(false)}
-                // onBlur={(e) => setActive(false)}
+                onBlur={(e) => console.log('eee blur', e)}
                 // onFocus={(e) => setActive(true)}
                 ref={editer}
                 // onChange={(e) => console.log('onChange', e)}
-                onInput={(e) => console.log('eee??', e)}
+                onInput={onInput}
                 contentEditable={true}
                 suppressContentEditableWarning={true}
                 // dangerouslySetInnerHTML={innerHTML()}
