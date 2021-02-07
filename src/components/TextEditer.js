@@ -389,28 +389,36 @@ const TextEditor = () => {
         console.log('e>>>>', e);
         console.log('data', e.nativeEvent.data);
         console.log('innerText', e.target.innerText);
-        let cc = document.createElement('span');
-        cc.id = 'caretID';
-        setText([{ type: Fragment, value: e.target.innerText }]);
-        document.getSelection().getRangeAt(0).insertNode(cc);
-        editer.current.blur();
-        console.log('ㅊㅊㅊㅊ', document.getSelection().getRangeAt(0));
+        // let cc = document.createElement('span');
+        // cc.id = 'caretID';
+        // document.getSelection().getRangeAt(0).insertNode(cc);
+        // setText([{ type: Fragment, value: e.target.innerText }]);
+        // editer.current.blur();
+        // console.log('ㅊㅊㅊㅊ', document.getSelection().getRangeAt(0));
 
-        editer.current.focus();
-        var range = document.createRange();
-        let vv = document.getElementById('caretID');
-        range.selectNode(vv);
+        // editer.current.focus();
+        // var range = document.createRange();
+        // let vv = document.getElementById('caretID');
+        // range.selectNode(vv);
 
-        let vvSelection = document.getSelection();
-        vvSelection.removeAllRanges();
-        vvSelection.addRange(range);
-        range.deleteContents();
+        // let vvSelection = document.getSelection();
+        // vvSelection.removeAllRanges();
+        // vvSelection.addRange(range);
+        // range.deleteContents();
 
         // editer.current.setSelectionRange(2, 5);
     };
     console.log('text11111', text);
     //  const [text, setText] = useState([{ type: Fragment, value: 'value' }]);
-
+    const enterToBr = (e) => {
+        var evt = e || window.event;
+        var keyCode = evt.charCode || evt.keyCode;
+        console.log('keyCode>>', keyCode);
+        if (keyCode == 13) {
+            // document.execCommand('insertHTML', false, '<br>');
+            evt.preventDefault();
+        }
+    };
     return (
         <EditerWrap>
             {/* <button onClick={(e) => setActive(true)}>dmdmdmd?</button> */}
@@ -418,6 +426,7 @@ const TextEditor = () => {
                 text change
             </button> */}
             <div
+                className="editor"
                 onSelect={onSelectEvent}
                 // onSelect={(e) => console.log(e.selectionStart)}
                 // onMouseDown={(e) => setSelect(false)}
@@ -425,6 +434,7 @@ const TextEditor = () => {
                 onBlur={(e) => console.log('eee blur', e)}
                 // onFocus={(e) => setActive(true)}
                 ref={editer}
+                onKeyDown={enterToBr}
                 // onChange={(e) => console.log('onChange', e)}
                 onInput={onInput}
                 contentEditable={true}
@@ -445,7 +455,8 @@ export default TextEditor;
 
 const EditerWrap = styled.div`
     position: relative;
-    .editer {
+    .editor {
+        /* display: inline-block; */
         /* height: 44px; */
         padding: 10px 45px 10px 16px;
         outline: none;
